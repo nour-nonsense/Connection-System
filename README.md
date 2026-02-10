@@ -11,10 +11,18 @@ A connection management system for Unity Multiplayer projects using Netcode for 
 - Session management integration (Unity Gaming Services)
 - PubSub messaging infrastructure
 - Headless SceneLoaderWrapper (extensible, no UI dependencies)
+- **Dedicated Server Hosting** (Agones adapter with automatic local fallback)
 
 ## Prerequisites
 
 > **⚠️ VContainer Required:** This package uses [VContainer](https://github.com/hadashiA/VContainer) for dependency injection. You **must** install it before installing this package.
+
+> **⚠️ Agones SDK (Optional):** For dedicated server hosting with [Agones](https://agones.dev), install the Agones Unity SDK:
+> ```
+> https://github.com/googleforgames/agones.git?path=/sdks/unity#v1.55.0
+> ```
+> Then add `AGONES_SDK` to **Scripting Define Symbols** (Project Settings > Player > Other Settings).
+> Without this, the system automatically falls back to standard local hosting.
 
 ### Install VContainer (choose one):
 

@@ -15,8 +15,12 @@ namespace Unity.ConnectionManagement
     /// </summary>
     class StartingServerState : OnlineState
     {
-        [Inject(Optional = true)]
         IHostingAdapter m_HostingAdapter;
+
+        /// <summary>
+        /// Set by ConnectionManager after resolving the optional hosting adapter.
+        /// </summary>
+        internal void SetHostingAdapter(IHostingAdapter adapter) => m_HostingAdapter = adapter;
 
         ConnectionMethodBase m_ConnectionMethod;
 

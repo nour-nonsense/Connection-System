@@ -71,7 +71,6 @@ namespace Unity.ConnectionManagement
         [Inject]
         IObjectResolver m_Resolver;
 
-        [Inject(Optional = true)]
         IHostingAdapter m_HostingAdapter;
 
         public int MaxConnectedPlayers = 8;
@@ -92,11 +91,19 @@ namespace Unity.ConnectionManagement
 
         void Start()
         {
+            // Resolve optional hosting adapter (null if not registered in VContainer)
+            try { m_HostingAdapter = m_Resolver.Resolve<IHostingAdapter>(); }
+            catch { m_HostingAdapter = null; }
+
             List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_StartingServer, m_Hosting, m_DedicatedServerHosting };
             foreach (var connectionState in states)
             {
                 m_Resolver.Inject(connectionState);
             }
+
+            // Pass the optional adapter to states that need it
+            m_StartingServer.SetHostingAdapter(m_HostingAdapter);
+            m_DedicatedServerHosting.SetHostingAdapter(m_HostingAdapter);
 
             m_CurrentState = m_Offline;
 

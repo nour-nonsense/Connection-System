@@ -20,8 +20,13 @@ namespace Unity.ConnectionManagement
         [Inject]
         IPublisher<ConnectionEventMessage> m_ConnectionEventPublisher;
 
-        [Inject]
         IHostingAdapter m_HostingAdapter;
+
+        /// <summary>
+        /// Set by ConnectionManager after resolving the optional hosting adapter.
+        /// Guaranteed non-null when this state is entered (priority check passed).
+        /// </summary>
+        internal void SetHostingAdapter(IHostingAdapter adapter) => m_HostingAdapter = adapter;
 
         const int k_MaxConnectPayload = 1024;
 

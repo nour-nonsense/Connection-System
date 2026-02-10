@@ -29,7 +29,7 @@ The system is designed to enable Agones in production without breaking your loca
 To enable Agones support, you must install the **Agones Unity SDK**.
 
 1.  Open **Package Manager**.
-2.  Add package from git URL: `https://github.com/googleforgames/agones.git?path=/sdks/unity`
+2.  Add package from git URL: `https://github.com/googleforgames/agones.git?path=/sdks/unity#v1.55.0`
 3.  Add `AGONES_SDK` to your **Scripting Define Symbols** (Project Settings > Player > Other Settings).
 
 > [!NOTE]
