@@ -1,0 +1,22 @@
+{
+    "name": "Unity.ConnectionManagement.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Netcode.Runtime",
+        "Unity.Multiplayer.Samples.Utilities",
+        "Unity.Services.Core",
+        "Unity.Services.Authentication",
+        "Unity.Networking.Transport",
+        "VContainer",
+        "Unity.Services.Multiplayer"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
