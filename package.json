@@ -1,7 +1,7 @@
 {
     "name": "com.unity.connectionmanagement",
     "displayName": "Unity Connection Management",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "unity": "2022.3",
     "description": "A connection management system for Unity Multiplayer projects using Netcode for GameObjects. Provides a state-machine-based connection flow supporting direct IP and Unity Relay connections, with built-in reconnection, session management, and connection approval.",
     "dependencies": {
@@ -9,8 +9,7 @@
         "com.unity.transport": "2.0.0",
         "com.unity.services.core": "1.12.0",
         "com.unity.services.authentication": "3.3.0",
-        "com.unity.services.multiplayer": "1.0.0",
-        "com.unity.multiplayer.samples.coop": "2.0.0"
+        "com.unity.services.multiplayer": "1.0.0"
     },
     "keywords": [
         "multiplayer",
@@ -21,5 +20,12 @@
     ],
     "author": {
         "name": "Unity Technologies"
-    }
+    },
+    "samples": [
+        {
+            "displayName": "Standard VContainer Installer",
+            "description": "A reference LifetimeScope setup for wiring up the Connection System.",
+            "path": "Samples~/StandardInstaller"
+        }
+    ]
 }
