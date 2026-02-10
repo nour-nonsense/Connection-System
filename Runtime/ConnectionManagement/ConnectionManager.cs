@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.ConnectionManagement.Hosting;
 using Unity.ConnectionManagement.Utils;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -70,6 +71,9 @@ namespace Unity.ConnectionManagement
         [Inject]
         IObjectResolver m_Resolver;
 
+        [Inject(Optional = true)]
+        IHostingAdapter m_HostingAdapter;
+
         public int MaxConnectedPlayers = 8;
 
         internal readonly OfflineState m_Offline = new OfflineState();
@@ -79,6 +83,7 @@ namespace Unity.ConnectionManagement
         internal readonly StartingHostState m_StartingHost = new StartingHostState();
         internal readonly StartingServerState m_StartingServer = new StartingServerState();
         internal readonly HostingState m_Hosting = new HostingState();
+        internal readonly DedicatedServerHostingState m_DedicatedServerHosting = new DedicatedServerHostingState();
 
         void Awake()
         {
@@ -87,7 +92,7 @@ namespace Unity.ConnectionManagement
 
         void Start()
         {
-            List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_StartingServer, m_Hosting };
+            List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_StartingServer, m_Hosting, m_DedicatedServerHosting };
             foreach (var connectionState in states)
             {
                 m_Resolver.Inject(connectionState);

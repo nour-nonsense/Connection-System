@@ -23,6 +23,7 @@ Originally extracted from **Unity's official Boss Room sample**, it is designed 
 | [Utilities](utilities.md) | ClientPrefs, ProfileManager, SceneLoaderWrapper, NetworkNameState |
 | [API Reference](api-reference.md) | Full class/struct/interface listing with signatures |
 | [Integration Guide](integration-guide.md) | Step-by-step guide to wire this into your project |
+| [Dedicated Servers (Agones)](dedicated-server-agones.md) | **NEW!** Hosting on Agones / Kubernetes with automatic fallback |
 | [Troubleshooting](troubleshooting.md) | Common errors and solutions |
 
 ---

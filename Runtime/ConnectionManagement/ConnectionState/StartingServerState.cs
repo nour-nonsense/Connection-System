@@ -1,4 +1,5 @@
 using System;
+using Unity.ConnectionManagement.Hosting;
 using Unity.ConnectionManagement.Infrastructure;
 using Unity.ConnectionManagement.Sessions;
 using Unity.Netcode;
@@ -14,6 +15,9 @@ namespace Unity.ConnectionManagement
     /// </summary>
     class StartingServerState : OnlineState
     {
+        [Inject(Optional = true)]
+        IHostingAdapter m_HostingAdapter;
+
         ConnectionMethodBase m_ConnectionMethod;
 
         public StartingServerState Configure(ConnectionMethodBase baseConnectionMethod)
@@ -29,8 +33,35 @@ namespace Unity.ConnectionManagement
 
         public override void Exit() { }
 
-        public override void OnServerStarted()
+        /// <summary>
+        /// Agones Priority / Local Fallback:
+        /// 1. If IHostingAdapter is available and connects → DedicatedServerHostingState
+        /// 2. Otherwise → standard HostingState
+        /// </summary>
+        public override async void OnServerStarted()
         {
+            // 1. Try Agones (or any hosting adapter)
+            if (m_HostingAdapter != null)
+            {
+                try
+                {
+                    bool connected = await m_HostingAdapter.InitializeAsync();
+                    if (connected)
+                    {
+                        Debug.Log("[Server] Hosting platform connected. Entering DedicatedServerHostingState.");
+                        m_ConnectStatusPublisher.Publish(ConnectStatus.Success);
+                        m_ConnectionManager.ChangeState(m_ConnectionManager.m_DedicatedServerHosting);
+                        return;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[Server] Hosting adapter initialization failed: {e.Message}. Falling back to local.");
+                }
+            }
+
+            // 2. Fallback to standard local hosting
+            Debug.Log("[Server] No hosting platform detected. Using standard HostingState.");
             m_ConnectStatusPublisher.Publish(ConnectStatus.Success);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Hosting);
         }
