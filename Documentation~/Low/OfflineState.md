@@ -116,6 +116,24 @@ Same pattern but configures and transitions to `StartingHostState`.
 
 ### `StartHostSession(playerName)` — Line ~62
 
+### `StartServerIP(ip, port)` — Line ~70
+
+```csharp
+public override void StartServerIP(string ipaddress, int port)
+{
+    var connectionMethod = new ConnectionMethodIP(
+        ipaddress, (ushort)port,
+        m_ConnectionManager,
+        m_ProfileManager,
+        "DedicatedServer");
+    m_ConnectionManager.ChangeState(m_ConnectionManager.m_StartingServer.Configure(connectionMethod));
+}
+```
+
+Transitions to `StartingServerState`. The player name is hardcoded to "DedicatedServer" since headless instances don't have user profiles.
+
+### `StartHostSession(playerName)` — Line ~62
+
 Same pattern with `ConnectionMethodRelay` → `StartingHostState`.
 
 ---

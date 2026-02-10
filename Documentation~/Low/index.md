@@ -29,6 +29,7 @@ This folder contains **per-file, implementation-level** documentation for every 
 | [ClientConnectedState](ClientConnectedState.md) | `Runtime/ConnectionManagement/ConnectionState/ClientConnectedState.cs` | 44 |
 | [ClientReconnectingState](ClientReconnectingState.md) | `Runtime/ConnectionManagement/ConnectionState/ClientReconnectingState.cs` | 141 |
 | [StartingHostState](StartingHostState.md) | `Runtime/ConnectionManagement/ConnectionState/StartingHostState.cs` | 96 |
+| [StartingServerState](StartingServerState.md) | `Runtime/ConnectionManagement/ConnectionState/StartingServerState.cs` | ~80 |
 | [HostingState](HostingState.md) | `Runtime/ConnectionManagement/ConnectionState/HostingState.cs` | 165 |
 | [ConnectionMethod](ConnectionMethod.md) | `Runtime/ConnectionManagement/ConnectionMethod.cs` | 168 |
 | [SessionPlayerData](SessionPlayerData.md) | `Runtime/ConnectionManagement/SessionPlayerData.cs` | 40 |

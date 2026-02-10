@@ -83,9 +83,12 @@ ConnectionMethodIP(string ip, ushort port,
 ### Usage
 
 ```csharp
-// From your UI button handler:
+// From your UI button handler or startup script:
 connectionManager.StartHostIp("MyName", "127.0.0.1", 7777);
 connectionManager.StartClientIp("MyName", "192.168.1.100", 7777);
+
+// For Dedicated Server (Headless):
+connectionManager.StartServerIp("0.0.0.0", 7777);
 ```
 
 ---

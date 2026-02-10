@@ -52,7 +52,8 @@ All state objects are allocated in the field initializers (not in `Awake`/`Start
 | `m_ClientConnected` | `ClientConnectedState` | ~32 | `new ClientConnectedState()` |
 | `m_ClientReconnecting` | `ClientReconnectingState` | ~33 | `new ClientReconnectingState()` |
 | `m_StartingHost` | `StartingHostState` | ~34 | `new StartingHostState()` |
-| `m_Hosting` | `HostingState` | ~35 | `new HostingState()` |
+| `m_StartingServer` | `StartingServerState` | ~35 | `new StartingServerState()` |
+| `m_Hosting` | `HostingState` | ~36 | `new HostingState()` |
 
 ### Private Fields
 
@@ -81,13 +82,16 @@ Start()
   ├── m_Resolver.Inject(m_ClientConnecting)
   ├── m_Resolver.Inject(m_ClientConnected)
   ├── m_Resolver.Inject(m_ClientReconnecting)
+  ├── m_Resolver.Inject(m_ClientReconnecting)
   ├── m_Resolver.Inject(m_StartingHost)
+  ├── m_Resolver.Inject(m_StartingServer)
   ├── m_Resolver.Inject(m_Hosting)
   ├── m_CurrentState = m_Offline
-  └── RegisterNetworkCallbacks()
+  ├── RegisterNetworkCallbacks()
+  └── If BatchMode: AutoStartServer()
 ```
 
-**Critical detail:** All 6 state objects are injected here. If `m_Resolver` is null (VContainer not set up), injection fails with `NullReferenceException`. The states' `[Inject]` fields will remain null, causing runtime crashes later.
+**Critical detail:** All 7 state objects are injected here. Also checks `Application.isBatchMode` to automatically start a dedicated server if running in headless mode.
 
 ### `OnDestroy()` — Line ~65
 
@@ -198,6 +202,13 @@ Delegates to: m_CurrentState.StartHostSession(playerName)
 ```
 Delegates to: m_CurrentState.OnUserRequestedShutdown()
 ```
+
+### `StartServerIp(string ip, int port)` — Line ~160
+
+```
+Delegates to: m_CurrentState.StartServerIP(ip, port)
+```
+Only `OfflineState` implements this; transitions to `StartingServerState`.
 
 ---
 

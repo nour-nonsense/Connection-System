@@ -31,12 +31,14 @@
 | `m_ClientConnected` | `ClientConnectedState` | `internal` | Singleton state instance |
 | `m_ClientReconnecting` | `ClientReconnectingState` | `internal` | Singleton state instance |
 | `m_StartingHost` | `StartingHostState` | `internal` | Singleton state instance |
+| `m_StartingServer` | `StartingServerState` | `internal` | Singleton state instance |
 | `m_Hosting` | `HostingState` | `internal` | Singleton state instance |
 | `ChangeState(ConnectionState)` | `void` | `internal` | Transition to a new state |
 | `StartClientIp(name, ip, port)` | `void` | `public` | Begin IP client connection |
 | `StartClientSession(name)` | `void` | `public` | Begin Session/Relay client connection |
 | `StartHostIp(name, ip, port)` | `void` | `public` | Begin IP host |
 | `StartHostSession(name)` | `void` | `public` | Begin Session/Relay host |
+| `StartServerIp(ip, port)` | `void` | `public` | Begin Dedicated Server (Headless) |
 | `RequestShutdown()` | `void` | `public` | Request graceful shutdown |
 
 ### `ConnectionState` (abstract)
@@ -55,6 +57,7 @@
 | `StartClientSession(name)` | `void` |
 | `StartHostIP(name, ip, port)` | `void` |
 | `StartHostSession(name)` | `void` |
+| `StartServerIP(ip, port)` | `void` |
 | `ApprovalCheck(request, response)` | `void` |
 
 ### `ConnectionMethodBase` (abstract)

@@ -61,5 +61,11 @@ namespace Unity.ConnectionManagement
             var connectionMethod = new ConnectionMethodRelay(m_MultiplayerServicesFacade, m_ConnectionManager, m_ProfileManager, playerName);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_StartingHost.Configure(connectionMethod));
         }
+
+        public override void StartServerIP(string ipaddress, int port)
+        {
+            var connectionMethod = new ConnectionMethodIP(ipaddress, (ushort)port, m_ConnectionManager, m_ProfileManager, "DedicatedServer");
+            m_ConnectionManager.ChangeState(m_ConnectionManager.m_StartingServer.Configure(connectionMethod));
+        }
     }
 }

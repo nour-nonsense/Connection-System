@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.ConnectionManagement.Utils;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using Unity.ConnectionManagement;
 using VContainer;
@@ -76,6 +77,7 @@ namespace Unity.ConnectionManagement
         internal readonly ClientConnectedState m_ClientConnected = new ClientConnectedState();
         internal readonly ClientReconnectingState m_ClientReconnecting = new ClientReconnectingState();
         internal readonly StartingHostState m_StartingHost = new StartingHostState();
+        internal readonly StartingServerState m_StartingServer = new StartingServerState();
         internal readonly HostingState m_Hosting = new HostingState();
 
         void Awake()
@@ -85,7 +87,7 @@ namespace Unity.ConnectionManagement
 
         void Start()
         {
-            List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_Hosting };
+            List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_StartingServer, m_Hosting };
             foreach (var connectionState in states)
             {
                 m_Resolver.Inject(connectionState);
@@ -98,6 +100,12 @@ namespace Unity.ConnectionManagement
             NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
             NetworkManager.OnServerStopped += OnServerStopped;
+
+            // Auto-start dedicated server if running in batchmode (headless)
+            if (Application.isBatchMode)
+            {
+                AutoStartServer();
+            }
         }
 
         void OnDestroy()
@@ -174,9 +182,46 @@ namespace Unity.ConnectionManagement
             m_CurrentState.StartHostIP(playerName, ipaddress, port);
         }
 
+        public void StartServerIp(string ipaddress, int port)
+        {
+            m_CurrentState.StartServerIP(ipaddress, port);
+        }
+
         public void RequestShutdown()
         {
             m_CurrentState.OnUserRequestedShutdown();
+        }
+
+        /// <summary>
+        /// Parses command-line arguments and starts the server automatically.
+        /// Supported args: -port [number], -ip [address], -maxPlayers [number]
+        /// </summary>
+        void AutoStartServer()
+        {
+            string[] args = System.Environment.GetCommandLineArgs();
+            string ip = "0.0.0.0";
+            int port = 7777;
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                switch (args[i].ToLowerInvariant())
+                {
+                    case "-port" when i + 1 < args.Length:
+                        if (int.TryParse(args[i + 1], out int parsedPort))
+                            port = parsedPort;
+                        break;
+                    case "-ip" when i + 1 < args.Length:
+                        ip = args[i + 1];
+                        break;
+                    case "-maxplayers" when i + 1 < args.Length:
+                        if (int.TryParse(args[i + 1], out int maxPlayers))
+                            MaxConnectedPlayers = maxPlayers;
+                        break;
+                }
+            }
+
+            Debug.Log($"[Headless] Auto-starting server on {ip}:{port} (maxPlayers={MaxConnectedPlayers})");
+            StartServerIp(ip, port);
         }
     }
 }

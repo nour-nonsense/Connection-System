@@ -34,6 +34,8 @@ namespace Unity.ConnectionManagement
 
         public virtual void StartHostSession(string playerName) { }
 
+        public virtual void StartServerIP(string ipaddress, int port) { }
+
         public virtual void OnUserRequestedShutdown() { }
 
         public virtual void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response) { }
