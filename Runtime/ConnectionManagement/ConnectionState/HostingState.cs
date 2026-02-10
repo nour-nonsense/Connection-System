@@ -2,7 +2,7 @@ using System;
 using Unity.ConnectionManagement.Infrastructure;
 using Unity.ConnectionManagement.UnityServices.Sessions;
 using Unity.ConnectionManagement.Sessions;
-using Unity.Multiplayer.Samples.Utilities;
+using Unity.ConnectionManagement.Utils;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;

@@ -3,12 +3,12 @@
     "rootNamespace": "",
     "references": [
         "Unity.Netcode.Runtime",
-        "Unity.Multiplayer.Samples.Utilities",
         "Unity.Services.Core",
         "Unity.Services.Authentication",
         "Unity.Networking.Transport",
         "VContainer",
-        "Unity.Services.Multiplayer"
+        "Unity.Services.Multiplayer",
+        "Unity.Collections"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

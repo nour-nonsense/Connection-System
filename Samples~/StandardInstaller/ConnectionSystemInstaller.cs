@@ -24,6 +24,7 @@ namespace Unity.ConnectionManagement.Samples
 
             // Infrastructure & Utils
             builder.RegisterComponentInHierarchy<UpdateRunner>();
+            builder.RegisterComponentInHierarchy<SceneLoaderWrapper>();
             builder.Register<LocalSession>(Lifetime.Singleton);
             builder.Register<LocalSessionUser>(Lifetime.Singleton);
             builder.Register<ProfileManager>(Lifetime.Singleton);
